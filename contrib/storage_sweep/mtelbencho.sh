@@ -18,7 +18,7 @@
 #
 # Remarks: 0. In the following, it is assumed that the elbencho in the
 #             $PATH.
-#          1. The wrapper always invokes elbencho with its --dropcache
+#          1. The wrapper always invokes elbencho with its --(mabudio changed) dropcache
 #             option. As such, it must be run either under root or
 #             by a user with sudo root priviledge.
 #          2. By default, it runs only tests in direct IO mode with
@@ -306,7 +306,7 @@ los_files() {
         cmd="elbencho --dirsharing -$type -t $threads --nolive "
         cmd+="-F -d -n 1 -N $file_per_thread "
         cmd+="-s ${file_size_multiplier}k --trunctosize "
-        cmd+="-b $block_size --dropcache --nodelerr "
+        cmd+="-b $block_size --nodelerr "
         
         # Almost all known modern file systems have a default file
         # system block size value 4096 bytes (4 KiB). For a file whose
@@ -353,7 +353,7 @@ medium_files()
         cmd="elbencho --dirsharing -$type -t $threads --nolive "
         cmd+="-F -d -n 1 -N $file_per_thread "
         cmd+="-s ${file_size_multiplier}m --trunctosize "
-        cmd+="-b $block_size --dropcache --nodelerr "
+        cmd+="-b $block_size --nodelerr "
         
         if ! [[ "$buffered" ]]; then
             cmd+="--direct "
@@ -390,7 +390,7 @@ large_files()
         
         cmd="elbencho -$type -t $threads --nolive -F "
         cmd+="-s ${file_size_multiplier}g --trunctosize "
-        cmd+="-b $block_size --dropcache --nodelerr "
+        cmd+="-b $block_size --nodelerr "
         
         if ! [[ "$buffered" ]]; then
             cmd+="--direct "
@@ -413,7 +413,7 @@ run_as_root()
     euid=$(id -u)
     if [[ "$euid" -ne 0 ]]; then
         local msg
-        msg="elbencho --dropcache must be run under root to work. Abort!"
+        msg="elbencho --dropcache must be run under root to work. Abort! Updated by Masudio nomore!"
         echo "$msg"
         exit 1
     fi
